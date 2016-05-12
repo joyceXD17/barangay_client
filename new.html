@@ -1,0 +1,44 @@
+<html>
+<head>
+<style type ="text/css">
+.list{
+	border-collapse:collapse;
+}	
+.list tr td{
+	border: 1px solid green;
+}
+</style>
+<script type="text/javascript" src=jquery-2.2.3.js"></script>
+<script type="text/javascript">
+function fetch_data(){
+	var url = "http://localhost:8080/data";
+	$.getJSON(url, function(data){                                                 
+	write_data(data);
+	  });
+}
+function write_data(data){
+      console.log("data", data);
+       document.write("<table border='1'>");
+        for(i=0; i< data.length; i++){
+         n wr
+	          document.write("<tr>");
+	           document.write("<td>"+data[i].firstname+"</td>");
+	            document.write("<td>"+data[i].lastname+"</td>");
+	             document.write("<td>"+data[i].age+"</td>");
+		          document.write("</tr>");
+		       }
+		        document.write("</table>");
+		     }
+			  
+			  fetch_data();
+</script>
+<body>
+<table border ="2">
+	<tr>
+		<th>GOOGLE.COM</th>
+	</tr>
+</table>
+	 
+</body>
+</head>
+</html>

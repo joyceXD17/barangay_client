@@ -1,0 +1,86 @@
+<html>
+<head>
+<h1 style="text-align:center;">BARANGAY BASACDACU DATA BASE</h1>
+<style type="text/css">
+.list{
+	border-collapse: collapse;
+}
+.list tr td{
+	border: 1px solid green;
+}
+</style>
+<script type="text/javascript" src="jquery-2.2.3.js"></script>
+<script type="text/javascript">
+function fetch_data(){
+	var url = "http://localhost:8080/data";
+	$.getJSON(url, function(data){
+		write_data(data);
+	}).fail(function(e){
+		console.error("Error parsing json", e);
+	});
+}
+
+function write_data(data){
+    console.log("data", data);
+	var html = "<table border='1'>";
+    for(i=0; i< data.length; i++){
+        html +="<tr>";
+        html += "<td>"+data[i].firstname+"</td>";
+        html += "<td>"+data[i].lastname+"</td>";
+        html += "<td>"+data[i].age+"</td>";
+		html += "<td><img src='"+data[i].pic+"'/></td>";
+		html += "<td>"+data[i].status+"</td>";
+		html += "<td>"+data[i].occupation+"</td>";
+        html += "</tr>";
+    }
+    html += "</table>";
+	document.getElementById('data_container').innerHTML = html;
+}
+
+fetch_data();
+
+
+
+function search_data(){
+	var needle = document.getElementById('needle').value;
+	console.log("needle", needle);
+	var url = "http://localhost:8080/search/"+needle/page;
+	$.getJSON(url, function(data){
+		write_search_data(data);
+	}).fail(function(e){
+		console.error("Error parsing json", e);
+	});
+}
+
+function write_search_data(data){
+    console.log("data", data);
+	var html = "<table border='1'>";
+    for(i=0; i< data.length; i++){
+        html +="<tr>";
+        html += "<td>"+data[i].firstname+"</td>";
+        html += "<td>"+data[i].lastname+"</td>";
+        html += "<td>"+data[i].age+"</td>";
+		html += "<td><img src='"+data[i].pic+"'/></td>";
+		html += "<td>"+data[i].status+"</td>";
+		html += "<td>"+data[i].occupation+"</td>";
+        html += "</tr>";
+    }
+    html += "</table>";
+	document.getElementById("search_data").innerHTML = html;
+}
+function keyPress(event){
+	var key = event.keyCode;
+	if(key == 32 || key == 13){
+		search_data();
+	}
+}
+</script>
+</head>
+<body>
+<div id="data_container"></div>
+<input id="needle" type="text" onkeypress="keyPress(event)"/>
+<button onclick="search_data()">Search</button>
+<div id="search_data"></div>
+</body>
+</html>
+
